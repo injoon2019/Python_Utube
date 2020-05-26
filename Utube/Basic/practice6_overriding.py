@@ -46,7 +46,16 @@ battlecruiser.move("9h")
 #Building
 class BuildingUnit(Unit):
     def __init__(self, name, hp, location):
-        pass
+        #Unit.__init__(self, name, hp, 0)
+        super().__init__(name, hp, 0)
+        self.location = location
 
 
 supply_depot = BuildingUnit("Supplt depot", 500, "7h")
+
+
+def game_start():
+    print("new game start")
+
+def game_over():
+    pass
