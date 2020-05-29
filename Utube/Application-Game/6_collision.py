@@ -32,6 +32,15 @@ to_y = 0
 #이동 속도
 character_speed = 0.6
 
+#적 enemy 케릭터가
+enemy = pygame.image.load("C:\\Users\\injoo\\Desktop\\Python\\Utube\\Application-Game\\enemy.png")
+enemy_size = enemy.get_rect().size      #이미지의 크기 구하기
+enemy_width = enemy_size[0]         #캐릭터의 가로 크기
+enemy_height = enemy_size[1]        #캐릭터의 세로 크기
+enemy_x_pos = (screen_width/2) - (enemy_width/2)       #화면 가로의 절반에 해당하는 곳에 위치
+enemy_y_pos = (screen_height/2) - (enemy_height/2)   #화면 세로 크기 가장 아래
+
+
 #이벤트 루프
 running = True #게임이 진행중인가?
 while running:
@@ -77,8 +86,23 @@ while running:
     elif character_y_pos > screen_height - character_width:
         character_y_pos = screen_height -character_width
 
-    screen.blit(background, (0,0)) #배경 그리기
+    #충돌 처리
+    character_rect = character.get_rect()
+    #케릭터의 현재 위치 업데이트
+    character_rect.left = character_x_pos
+    character_rect.top = character_y_pos
 
+    enemy_rect = enemy.get_rect()
+    enemy_rect.left = enemy_x_pos
+    enemy_rect.top = enemy_y_pos
+
+    #충돌체크
+    if character_rect.colliderect(enemy_rect):
+        print("충돌했어요")
+        running = False
+
+    screen.blit(background, (0,0)) #배경 그리기
+    screen.blit(enemy, (enemy_x_pos, enemy_y_pos))
     screen.blit(character, (character_x_pos, character_y_pos)) #캐릭터 그리기
     pygame.display.update() #게임 화면을 계속 다시 그리기
 
